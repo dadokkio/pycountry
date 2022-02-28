@@ -140,6 +140,9 @@ class Database:
                 v = candidate._fields.get(k)
                 if v is None:
                     continue
+                if isinstance(v, list):
+                    if value in v:
+                        return candidate
                 if v.lower() == value:
                     return candidate
 

@@ -4,6 +4,7 @@
 import os.path
 import unicodedata
 import pycountry.db
+import gettext
 
 
 try:
@@ -66,9 +67,10 @@ class ExistingCountries(pycountry.db.Database):
         # Prio 3: partial matches on country names
         for candidate in self:
             # Higher priority for a match on the common name
-            for v in [candidate._fields.get('name'),
-                      candidate._fields.get('official_name'),
-                      candidate._fields.get('comment')]:
+            possible_names = [candidate._fields.get('name'),
+                              candidate._fields.get('official_name')]
+            possible_names += candidate._fields.get('translations', [])
+            for v in possible_names:
                 if v is None:
                     continue
                 v = remove_accents(v.lower())
@@ -208,3 +210,11 @@ language_families = LanguageFamilies(
     os.path.join(DATABASE_DIR, 'iso639-5.json'))
 
 scripts = Scripts(os.path.join(DATABASE_DIR, 'iso15924.json'))
+
+def install_translations_for_countries(languages):
+    # Add translations to countries
+    langs = [gettext.translation('iso3166', LOCALES_DIR, languages=[lang])
+             for lang in languages]
+    for country in countries:
+        country.translations = [lang.gettext(country.name).lower()
+                                for lang in langs]
