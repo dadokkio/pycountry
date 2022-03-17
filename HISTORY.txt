@@ -1,10 +1,16 @@
 Changes
 =======
 
-22.1.11 (unreleased)
---------------------
+22.3.6 (unreleased)
+-------------------
 
 - Nothing changed yet.
+
+
+22.3.5 (2022-03-05)
+-------------------
+
+- Update to iso-codes 4.9.0.
 
 
 22.1.10 (2022-01-10)
@@ -40,7 +46,7 @@ Changes
 
 - PR 33: Remove defunct bugtracker link from README (thanks, jwilk)
 
-- P3 32: (Somewhat hilarious) Typo (thanks, jwilk)
+- PR 32: (Somewhat hilarious) Typo (thanks, jwilk)
 
 - Moved to Git/Github; switched from Bitbucket Pipelines to Travis builds.
 
