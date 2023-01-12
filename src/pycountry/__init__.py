@@ -74,7 +74,8 @@ class ExistingCountries(pycountry.db.Database):
         for candidate in self:
             # Higher priority for a match on the common name
             possible_names = [candidate._fields.get('name'),
-                              candidate._fields.get('official_name')]
+                              candidate._fields.get('official_name'),
+                              candidate._fields.get("comment"),]
             possible_names += candidate._fields.get('translations', [])
             for v in possible_names:
                 if v is None:
@@ -221,7 +222,7 @@ scripts = Scripts(os.path.join(DATABASE_DIR, 'iso15924.json'))
 
 def install_translations_for_countries(languages):
     # Add translations to countries
-    langs = [gettext.translation('iso3166', LOCALES_DIR, languages=[lang])
+    langs = [gettext.translation('iso3166-1', LOCALES_DIR, languages=[lang])
              for lang in languages]
     for country in countries:
         country.translations = [lang.gettext(country.name).lower()
