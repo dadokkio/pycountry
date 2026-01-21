@@ -216,7 +216,7 @@ Scripts are available from a database similar to the countries:
 .. code:: pycon
 
    >>> len(pycountry.scripts)
-   182
+   226
    >>> list(pycountry.scripts)[0]
    Script(alpha_4='Adlm', name='Adlam', numeric='166')
    >>> latin = pycountry.scripts.get(name='Latin')
@@ -238,7 +238,7 @@ The currencies database is, again, similar to the ones before:
 .. code:: pycon
 
    >>> len(pycountry.currencies)
-   181
+   178
    >>> list(pycountry.currencies)[0]
    Currency(alpha_3='AED', name='UAE Dirham', numeric='784')
    >>> argentine_peso = pycountry.currencies.get(alpha_3='ARS')
@@ -260,7 +260,7 @@ The languages database is similar too:
 .. code:: pycon
 
    >>> len(pycountry.languages)
-   7910
+   7923
    >>> list(pycountry.languages)[0]
    Language(alpha_3='aaa', name='Ghotuo', scope='I', type='L')
 
