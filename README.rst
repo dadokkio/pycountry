@@ -2,9 +2,6 @@
  pycountry
 ###########
 
-..
-   image:g: https://travis-ci.org/flyingcircusio/pycountry.svg?branch=master
-
 pycountry provides the ISO databases for the standards:
 
 -  `639-3 <https://en.wikipedia.org/wiki/ISO_639-3>`_ Languages
@@ -104,9 +101,8 @@ ones with fewer matches:
 
 Attributes for the country class can be accessed using the
 ``__getattr__`` method. If the requested attribute is a key for the
-country class, it will return the corresponding value. In the special
-cases of missing 'common_name' or 'official_name' attributes,
-``__getattr__`` will return 'name'. Here are some examples:
+country class, it will return the corresponding value. Here are some
+examples:
 
 .. code:: pycon
 
@@ -192,7 +188,6 @@ Some subdivisions specify another subdivision as a parent:
    SubdivisionHierarchy(code='FR-ARA', country_code='FR', name='Auvergne-Rhône-Alpes', parent_code=None, type='Metropolitan region')
    >>> fr_01.parent.name
    'Auvergne-Rhône-Alpes'
-
 
 The divisions of a single country can be queried using the country_code
 index:
@@ -358,12 +353,3 @@ Remove a country from a database:
 .. code:: pycon
 
    >>> pycountry.countries.remove_entry(alpha_2="XK")
-
-***************************
- PyInstaller Compatibility
-***************************
-
-Some users have reported issues using PyCountry with PyInstaller
-guidance on how to handle the issues can be found in the `PyInstaller
-Google Group
-<https://groups.google.com/g/pyinstaller/c/OYhJdeZ9010/m/vLhYAWUzAQAJ>`_.
