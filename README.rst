@@ -30,16 +30,6 @@ wrapper around the ISO standard using the ``pkg-isocodes`` database from
 Debian *as is*. If you need changes to the political situation in the
 world, please talk to the ISO or Debian people, not me.
 
-******************************
- Donations / Monetary Support
-******************************
-
-This is a small project that I maintain in my personal time. I am not
-interested in personal financial gain. However, if you would like to
-support the project then I would love if you would donate to `Feminist
-Frequency <https://feministfrequency.com/donate/>`_ instead. Also, let
-the world know you did so, so that others can follow your path.
-
 ***************
  Contributions
 ***************
