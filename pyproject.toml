@@ -51,7 +51,8 @@ docutils = "<0.21"
 
 [tool.pytest.ini_options]
 pythonpath = "src"
-addopts = "--cov --cov-report=html --cov-report=term-missing"
+addopts = "--doctest-glob='*.rst' --cov --cov-report=html --cov-report=term-missing"
+doctest_optionflags = "NORMALIZE_WHITESPACE IGNORE_EXCEPTION_DETAIL"
 required_plugins = "pytest-cov>=4.0.0"
 
 [tool.ruff]
