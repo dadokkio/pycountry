@@ -79,6 +79,31 @@ class Database(Generic[T]):
         self.objects = []
         self.indices = {}
 
+    def _index_object(self, obj) -> None:
+        for key, value in obj._fields.items():
+            if key in self.no_index:
+                continue
+            # Lookups and searches are case insensitive. Normalize
+            # here.
+            index = self.indices.setdefault(key, {})
+            value = value.lower()
+            if value in index:
+                logger.debug(
+                    "%s %r already taken in index %r and will be "
+                    "ignored. This is an error in the databases."
+                    % (self.factory.__name__, value, key)
+                )
+            index[value] = obj
+
+    def _deindex_object(self, obj) -> None:
+        for key, value in obj._fields.items():
+            if key in self.no_index:
+                continue
+            value = value.lower()
+            index = self.indices.setdefault(key, {})
+            if value in index:
+                del index[value]
+
     def _load(self) -> None:
         if self._is_loaded:
             # Help keeping the _load_if_needed code easier
@@ -92,22 +117,8 @@ class Database(Generic[T]):
         for entry in tree[self.root_key]:
             obj = self.factory(**entry)
             self.objects.append(obj)
-            # Inject into index.
-            for key, value in entry.items():
-                if key in self.no_index:
-                    continue
-                # Lookups and searches are case insensitive. Normalize
-                # here.
-                index = self.indices.setdefault(key, {})
-                value = value.lower()
-                if value in index:
-                    logger.debug(
-                        "%s %r already taken in index %r and will be "
-                        "ignored. This is an error in the databases."
-                        % (self.factory.__name__, value, key)
-                    )
-                index[value] = obj
-
+            # Inject into indices
+            self._index_object(obj)
         self._is_loaded = True
 
     # Public API
@@ -121,18 +132,12 @@ class Database(Generic[T]):
         self.objects.append(obj)
 
         # update indices
-        for key, value in kw.items():
-            if key in self.no_index:
-                continue
-            value = value.lower()
-            index = self.indices.setdefault(key, {})
-            index[value] = obj
+        self._index_object(obj)
 
     @lazy_load
     def remove_entry(self, **kw):
         # make sure that we receive None if no entry found
-        if "default" in kw:
-            del kw["default"]
+        kw.pop("default", None)
         obj = self.get(**kw)
         if not obj:
             raise KeyError(
@@ -143,13 +148,7 @@ class Database(Generic[T]):
         self.objects.remove(obj)
 
         # update indices
-        for key, value in obj:
-            if key in self.no_index:
-                continue
-            value = value.lower()
-            index = self.indices.setdefault(key, {})
-            if value in index:
-                del index[value]
+        self._deindex_object(obj)
 
     @lazy_load
     def __iter__(self) -> Iterator[T]:
