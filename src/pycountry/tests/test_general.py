@@ -350,6 +350,55 @@ def test_country_remove_non_existent_entry(countries):
         pycountry.countries.remove_entry(name="Not A Real Country")
 
 
+def test_subdivision_add_entry(subdivisions):
+    assert subdivisions.get(code="IT-A0") is None
+    it_subdivs = sorted(
+        subdivisions.get(country_code="IT"),
+        key=lambda s: s.code,
+    )
+    assert len(it_subdivs) == 126
+    assert it_subdivs[0] == subdivisions.get(code="IT-21")
+
+    subdivisions.add_entry(
+        code="IT-A0",
+        country_code="IT",
+        name="Valle d'Aosta",
+        parent="23",
+        parent_code="IT-23",
+        type="Province",
+    )
+
+    it_a0 = subdivisions.get(code="IT-A0")
+    assert isinstance(it_a0, subdivisions.data_class)
+
+    # Confirm that indexes were not destroyed
+    it_subdivs = sorted(
+        subdivisions.get(country_code="IT"),
+        key=lambda s: s.code,
+    )
+    assert len(it_subdivs) == 127
+    assert it_subdivs[0] == subdivisions.get(code="IT-21")
+
+
+def test_subdivision_remove_entry(subdivisions):
+    assert subdivisions.get(code="IT-21") is not None
+
+    subdivisions.remove_entry(code="IT-21")
+
+    assert subdivisions.get(code="IT-21") is None
+
+    # Confirm that indexes were not destroyed
+    it_subdivs = sorted(
+        subdivisions.get(country_code="IT"),
+        key=lambda s: s.code,
+    )
+    assert len(it_subdivs) == 125
+    assert it_subdivs[0] == subdivisions.get(code="IT-23")
+
+    # Removing an entry does not remove its children
+    assert subdivisions.match("IT-21")[0].parent_code == "IT-21"
+
+
 def test_no_results_lookup_error(countries):
     try:
         import importlib_resources  # type: ignore

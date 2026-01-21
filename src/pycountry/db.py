@@ -63,6 +63,7 @@ class Database(Generic[T]):
     data_class: type | str
     root_key: str | None = None
     no_index: list[str] = []
+    special_index: list[str] = []
 
     def __init__(self, filename: str) -> None:
         self.filename = filename
@@ -79,9 +80,18 @@ class Database(Generic[T]):
         self.objects = []
         self.indices = {}
 
+    def _special_index(self, obj, key) -> None:
+        raise NotImplementedError("Must be implemented in subclass")
+
+    def _special_deindex(self, obj, key) -> None:
+        raise NotImplementedError("Must be implemented in subclass")
+
     def _index_object(self, obj) -> None:
         for key, value in obj._fields.items():
             if key in self.no_index:
+                continue
+            if key in self.special_index:
+                self._special_index(obj, key)
                 continue
             # Lookups and searches are case insensitive. Normalize
             # here.
@@ -98,6 +108,9 @@ class Database(Generic[T]):
     def _deindex_object(self, obj) -> None:
         for key, value in obj._fields.items():
             if key in self.no_index:
+                continue
+            if key in self.special_index:
+                self._special_deindex(obj, key)
                 continue
             value = value.lower()
             index = self.indices.setdefault(key, {})
