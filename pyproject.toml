@@ -2,19 +2,21 @@
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.poetry]
+[project]
 name = "pycountry"
 version = "24.6.2.dev0"
 description = "ISO country, subdivision, language, currency and script definitions and their translations"
-authors = ["Christian Theune <ct@flyingcircus.io>"]
+authors = [
+	{name="Christian Theune", email="ct@flyingcircus.io"},
+]
 maintainers = [
-	"Nate Schimmoller <nschimmo@gmail.com>",
-	"Zachary Ware <zachary.ware@gmail.com>",
-	]
+	{name="Nate Schimmoller", email="nschimmo@gmail.com"},
+	{name="Zachary Ware", email="zachary.ware@gmail.com"},
+]
 license = "LGPL-2.1-only"
 readme = "README.rst"
-repository = "https://github.com/flyingcircusio/pycountry"
 keywords = [ "country", "subdivision", "language", "currency", "iso", "3166", "639", "4217", "15924", "3166-1","3166-2", "3166-3"]
+requires-python = ">=3.10"
 classifiers = [
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
@@ -32,8 +34,10 @@ classifiers = [
         "Topic :: Software Development :: Localization"
         ]
 
-[tool.poetry.dependencies]
-python = ">=3.10"
+[project.urls]
+source = "https://github.com/pycountry/pycountry"
+issues = "https://github.com/pycountry/pycountry/issues"
+changelog = "https://github.com/pycountry/pycountry/blob/main/HISTORY.txt"
 
 [tool.poetry.group.dev.dependencies]
 mypy = ">1.7.1"
@@ -53,8 +57,6 @@ required_plugins = "pytest-cov>=4.0.0"
 [tool.ruff]
 # See https://docs.astral.sh/ruff/settings/ for documentation and other options
 line-length = 80
-# Lowest supported version
-target-version = "py310"
 
 [tool.ruff.lint]
 select = [
