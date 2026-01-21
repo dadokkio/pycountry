@@ -1,25 +1,6 @@
-[tool.ruff]
-# See https://docs.astral.sh/ruff/settings/ for documentation and other options
-line-length = 80
-# Lowest supported version
-target-version = "py310"
-
-[tool.ruff.lint]
-select = [
-  "E4",
-  "E7",
-  "E9",
-  "F",
-  "I",
-]
-
-[tool.codespell]
-# Ignore false-positive on 'Nam', found in tests
-ignore-words-list = "nam"
-
-[tool.mypy]
-exclude = "/locales/"
-packages = "pycountry"
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "pycountry"
@@ -69,6 +50,25 @@ pythonpath = "src"
 addopts = "--cov --cov-report=html --cov-report=term-missing"
 required_plugins = "pytest-cov>=4.0.0"
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.ruff]
+# See https://docs.astral.sh/ruff/settings/ for documentation and other options
+line-length = 80
+# Lowest supported version
+target-version = "py310"
+
+[tool.ruff.lint]
+select = [
+  "E4",
+  "E7",
+  "E9",
+  "F",
+  "I",
+]
+
+[tool.codespell]
+# Ignore false-positive on 'Nam', found in tests
+ignore-words-list = "nam"
+
+[tool.mypy]
+exclude = "/locales/"
+packages = "pycountry"
