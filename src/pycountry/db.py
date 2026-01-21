@@ -77,7 +77,6 @@ class Database(Generic[T]):
     def _clear(self):
         self._is_loaded = False
         self.objects = []
-        self.index_names = set()
         self.indices = {}
 
     def _load(self) -> None:
