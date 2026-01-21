@@ -75,3 +75,7 @@ repos:
       - id: rst-backticks
       - id: rst-directive-colons
       - id: rst-inline-touching-normal
+  - repo: https://github.com/henryiii/validate-pyproject-schema-store
+    rev: 0683153730d698451fb362e2ab58639b73172b64  # frozen: 2026.01.10
+    hooks:
+      - id: validate-pyproject
