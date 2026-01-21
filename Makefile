@@ -64,7 +64,7 @@ wheel: data
 .HELP: poetry.lock
 ## Ensure that the poetry.lock file is up to date
 poetry.lock: pyproject.toml | $(POETRY)
-	$(POETRY) lock --no-update
+	$(POETRY) lock
 
 .cache:
 	@mkdir .cache
