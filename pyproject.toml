@@ -1,6 +1,6 @@
 [tool.black]
 line-length = 80
-target-version = ['py39']
+target-version = ['py310']
 
 [tool.codespell]
 # Ignore false-positive on 'Nam', found in tests
@@ -35,17 +35,17 @@ classifiers = [
         "Operating System :: OS Independent",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
         "Topic :: Software Development :: Internationalization",
         "Topic :: Software Development :: Localization"
         ]
 
 [tool.poetry.dependencies]
-python = ">=3.9"
+python = ">=3.10"
 
 [tool.poetry.group.dev.dependencies]
 # Note: black and isort are not listed here, as they don't need to be installed
