@@ -14,6 +14,11 @@ Changes
   example, results for ``countries.search_fuzzy("UK")`` will now include
   GB (United Kingdom).
 
+- Fixed ``subdivisions.add_entry`` and ``subdivisions.remove_entry``, which
+  would previously render the ``country_code`` index of ``subdivisions``
+  unusable causing ``subdivisions.get(country_code=...)`` to return a malformed
+  result.  Fixes issue #281.
+
 
 24.6.1 (2024-06-01)
 -------------------

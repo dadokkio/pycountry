@@ -188,18 +188,18 @@ class Subdivisions(pycountry.db.Database):
 
     data_class = SubdivisionHierarchy
     no_index = ["name", "parent_code", "parent", "type"]
+    special_index = ["country_code"]
     root_key = "3166-2"
 
-    def _load(self, *args, **kw):
-        super()._load(*args, **kw)
+    def _special_index(self, obj, key):
+        index = self.indices.setdefault(key, {})
+        divs = index.setdefault(getattr(obj, key).lower(), set())
+        divs.add(obj)
 
-        # Add index for the country code.
-        self.indices["country_code"] = {}
-        for subdivision in self:
-            divs = self.indices["country_code"].setdefault(
-                subdivision.country_code.lower(), set()
-            )
-            divs.add(subdivision)
+    def _special_deindex(self, obj, key):
+        index = self.indices.get(key)
+        divs = index.get(getattr(obj, key).lower(), set())
+        divs.discard(obj)
 
     def get(self, **kw):
         default = kw.setdefault("default", None)
